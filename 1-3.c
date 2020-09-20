@@ -4,7 +4,7 @@ int main()
 {
     int nelyginiai = 0, skaicius = 0, suma;
 
-    printf("Veskite skaitmenis, 0 zymi sekos pabaiga:\n");
+    printf("Veskite skaicius, 0 zymi sekos pabaiga:\n");
 
     do
     {
