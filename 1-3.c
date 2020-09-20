@@ -4,6 +4,8 @@ int main()
 {
     int nelyginiai = 0, skaicius = 0, suma;
 
+    printf("Veskite skaitmenis, 0 zymi sekos pabaiga:\n");
+
     do
     {
         suma = 0;
@@ -28,7 +30,7 @@ int main()
         scanf("%d", &skaicius);
     } while (skaicius != 0);
 
-    printf("Rezultatas: %d", nelyginiai);
+    printf("Nariai, kuriu skaitmenu suma nelygine: %d", nelyginiai);
 
     return 0;
 }
