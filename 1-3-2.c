@@ -3,20 +3,19 @@
 
 int main()
 {
-    int nelyginiai = 0, skaicius, skaicius2, suma;
+    int nelyginiai = 0, skaicius, suma;
 
     printf("Veskite skaicius, 0 zymi sekos pabaiga:\n");
+    scanf("%d", &skaicius);
 
-    do
+    while (skaicius != 0)
     {
         suma = 0;
-        scanf("%d", &skaicius);
-        skaicius2 = skaicius;
 
-        while (skaicius2 > 0)
+        while (skaicius > 0)
         {
-            suma += skaicius2 % 10;
-            skaicius2 /= 10;
+            suma += skaicius % 10;
+            skaicius /= 10;
         }
 
         // Patikrinimui, ar teisingai surandama skaitmenu suma
@@ -26,7 +25,9 @@ int main()
         {
             nelyginiai++;
         }
-    } while (skaicius != 0);
+
+        scanf("%d", &skaicius);
+    }
 
     printf("Nariai, kuriu skaitmenu suma nelygine: %d", nelyginiai);
 
