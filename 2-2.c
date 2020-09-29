@@ -57,7 +57,7 @@ void RastiBalnoTaskus(int N, int Matrica[][N], int BalnoTaskaiX[], int BalnoTask
         EiluciuElementai[i][0] = RastiMaziausia(N, Matrica[i]);
         EiluciuElementai[i][1] = RastiDidziausia(N, Matrica[i]);
 
-        // Paverciame stulpeli i eilute
+        // Perrasome stulpeli i vienmati masyva
         for (int j = 0; j < N; j++)
         {
             Stulpelis[j] = Matrica[j][i];
@@ -66,8 +66,8 @@ void RastiBalnoTaskus(int N, int Matrica[][N], int BalnoTaskaiX[], int BalnoTask
         StulpeliuElementai[i][0] = RastiMaziausia(N, Stulpelis);
         StulpeliuElementai[i][1] = RastiDidziausia(N, Stulpelis);
 
-        //printf("Eilute: %d %d\n", EiluciuElementai[i][0], EiluciuElementai[i][1]);
-        //printf("Stulpelis: %d %d\n", StulpeliuElementai[i][0], StulpeliuElementai[i][1]);
+        // printf("Eilute: %d %d\n", EiluciuElementai[i][0], EiluciuElementai[i][1]);
+        // printf("Stulpelis: %d %d\n", StulpeliuElementai[i][0], StulpeliuElementai[i][1]);
     }
 
     for (int i = 0; i < N; i++)
