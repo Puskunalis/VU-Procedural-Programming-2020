@@ -77,9 +77,9 @@ void RastiBalnoTaskus(int N, int Matrica[][N], int BalnoTaskaiX[], int BalnoTask
             if (Matrica[i][j] == EiluciuElementai[i][0] && Matrica[i][j] == StulpeliuElementai[j][1]
             || (Matrica[i][j] == EiluciuElementai[i][1] && Matrica[i][j] == StulpeliuElementai[j][0]))
             {
-                BalnoTaskaiX[(*balnoTaskai)] = i;
-                BalnoTaskaiY[(*balnoTaskai)] = j;
-                ++(*balnoTaskai);
+                BalnoTaskaiX[*balnoTaskai] = i;
+                BalnoTaskaiY[*balnoTaskai] = j;
+                ++*balnoTaskai;
             }
         }
     }
