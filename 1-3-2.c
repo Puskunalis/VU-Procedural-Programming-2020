@@ -23,7 +23,7 @@ int main()
 
         if (suma % 2 == 1)
         {
-            nelyginiai++;
+            ++nelyginiai;
         }
 
         scanf("%d", &skaicius);

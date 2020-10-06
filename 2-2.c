@@ -5,9 +5,9 @@ void SkaitytiMatrica(int N, int Matrica[][N])
 {
     printf("Veskite matricos narius:\n");
 
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N; ++i)
     {
-        for (int j = 0; j < N; j++)
+        for (int j = 0; j < N; ++j)
         {
             scanf("%d", &Matrica[i][j]);
         }
@@ -21,7 +21,7 @@ int RastiMaziausia(int N, int Masyvas[])
 {
     int maziausias = Masyvas[0];
 
-    for (int i = 1; i < N; i++)
+    for (int i = 1; i < N; ++i)
     {
         if (Masyvas[i] < maziausias)
         {
@@ -36,7 +36,7 @@ int RastiDidziausia(int N, int Masyvas[])
 {
     int didziausias = Masyvas[0];
 
-    for (int i = 1; i < N; i++)
+    for (int i = 1; i < N; ++i)
     {
         if (Masyvas[i] > didziausias)
         {
@@ -52,13 +52,13 @@ void RastiBalnoTaskus(int N, int Matrica[][N], int BalnoTaskaiX[], int BalnoTask
     // Indeksai: 0 - maziausias elementas, 1 - didziausias elementas
     int EiluciuElementai[N][2], StulpeliuElementai[N][2], Stulpelis[N];
 
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N; ++i)
     {
         EiluciuElementai[i][0] = RastiMaziausia(N, Matrica[i]);
         EiluciuElementai[i][1] = RastiDidziausia(N, Matrica[i]);
 
         // Perrasome stulpeli i vienmati masyva
-        for (int j = 0; j < N; j++)
+        for (int j = 0; j < N; ++j)
         {
             Stulpelis[j] = Matrica[j][i];
         }
@@ -70,16 +70,16 @@ void RastiBalnoTaskus(int N, int Matrica[][N], int BalnoTaskaiX[], int BalnoTask
         // printf("Stulpelis: %d %d\n", StulpeliuElementai[i][0], StulpeliuElementai[i][1]);
     }
 
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N; ++i)
     {
-        for (int j = 0; j < N; j++)
+        for (int j = 0; j < N; ++j)
         {
             if (Matrica[i][j] == EiluciuElementai[i][0] && Matrica[i][j] == StulpeliuElementai[j][1]
             || (Matrica[i][j] == EiluciuElementai[i][1] && Matrica[i][j] == StulpeliuElementai[j][0]))
             {
                 BalnoTaskaiX[(*balnoTaskai)] = i;
                 BalnoTaskaiY[(*balnoTaskai)] = j;
-                (*balnoTaskai)++;
+                ++(*balnoTaskai);
             }
         }
     }
@@ -95,7 +95,7 @@ void SpausdintiBalnoTaskus(int balnoTaskai, int BalnoTaskaiX[], int BalnoTaskaiY
     {
         printf("Balno taskai:\n");
 
-        for (int i = 0; i < balnoTaskai; i++)
+        for (int i = 0; i < balnoTaskai; ++i)
         {
             printf("(%d, %d)\n", BalnoTaskaiX[i] + 1, BalnoTaskaiY[i] + 1);
         }

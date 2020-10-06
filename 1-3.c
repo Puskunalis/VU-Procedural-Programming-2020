@@ -24,7 +24,7 @@ int main()
 
         if (suma % 2 == 1)
         {
-            nelyginiai++;
+            ++nelyginiai;
         }
     } while (skaicius != 0);
 
