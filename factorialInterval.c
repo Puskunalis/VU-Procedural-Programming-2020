@@ -4,11 +4,11 @@ int main()
 {
     int a, b, faktorialas = 1;
     printf("Iveskite faktorialu intervala [a, b]:\n");
-    scanf("%d %d", &a, &b);
+    scanf("%d%d", &a, &b);
 
     for (int i = 1; (faktorialas *= i) <= b; ++i)
     {
-        if (a <= faktorialas && faktorialas <= b)
+        if (a <= faktorialas)
         {
             printf("%d\n", faktorialas);
         }
