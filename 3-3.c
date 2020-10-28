@@ -1,86 +1,103 @@
 // Vilius Puskunalis 5 grupe 3 uzduotis
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#define INPUT_FILE "3-3.in"
-#define OUTPUT_FILE "3-3.out"
-#define ARRAY_SIZE 256
-#define MAX_LINE_SIZE 257
+#define ASCII_SPACE 32
+#define MAX_LINE_SIZE 256
 
-int read(char lines[][MAX_LINE_SIZE], int *linesCount)
+/*
+**  Return codes:
+**  0 - success
+**  1 - read error
+**  2 - write error
+*/
+int connectWords(char* inputFileName, char* outputFileName)
 {
-    FILE *inputFile = fopen(INPUT_FILE, "r");
+    FILE* inputFile;
 
-    if (inputFile != NULL)
+    if (!strcmp(inputFileName, "stdin"))
     {
-        while (!feof(inputFile))
-        {
-            // Lines longer than 255 symbols may not be parsed correctly
-            fgets(lines[(*linesCount)++], MAX_LINE_SIZE, inputFile);
-        }
+        inputFile = stdin;
+    }
+    else
+    {
+        inputFile = fopen(inputFileName, "r");
 
-        fclose(inputFile);
-        return 1;
+        if (inputFile == NULL)
+        {
+            return 1;
+        }
     }
 
-    return 0;
-}
+    FILE* outputFile;
 
-void connectWords(char line[])
-{
-    for (int i = 0; line[i + 3] != 0; ++i)
+    if (!strcmp(outputFileName, "stdout"))
     {
-        // Checking whether symbols separated by a dash are not spaces
-        if (line[i] != ' ' && line[i + 1] == '-' && line[i + 2] != ' ')
+        outputFile = stdout;
+    }
+    else
+    {
+        outputFile = fopen(outputFileName, "w");
+
+        if (outputFile == NULL)
         {
-            // Move the rest of the string, this way deleting the dash
-            for (int j = i + 1; line[j] != 0; ++j)
+            fclose(inputFile);
+            return 2;
+        }
+    }
+
+    char* line = malloc(MAX_LINE_SIZE + 1);
+
+    while (!feof(inputFile))
+    {
+        line = fgets(line, MAX_LINE_SIZE + 1, inputFile);
+
+        if (line != NULL)
+        {
+            for (int i = 0; line[i + 3] != 0; ++i)
             {
-                line[j] = line[j + 1];
+                // Checking whether symbols separated by a dash are not spaces
+                if (line[i] != ASCII_SPACE && line[i + 1] == '-' && line[i + 2] != ASCII_SPACE)
+                {
+                    // Move the rest of the string, this way deleting the dash
+                    for (int j = i + 1; line[j] != 0; ++j)
+                    {
+                        line[j] = line[j + 1];
+                    }
+
+                    --i;
+                }
             }
 
-            --i;
+            fputs(line, outputFile);
         }
     }
-}
 
-int write(char lines[][MAX_LINE_SIZE], int linesCount)
-{
-    FILE *outputFile = fopen(OUTPUT_FILE, "w");
-
-    if (outputFile != NULL)
-    {
-        for (int i = 0; i < linesCount; ++i)
-        {
-            fputs(lines[i], outputFile);
-        }
-
-        fclose(outputFile);
-        return 1;
-    }
-
+    free(line);
+    fclose(inputFile);
+    fclose(outputFile);
     return 0;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    char lines[ARRAY_SIZE][MAX_LINE_SIZE];
-    int linesCount = 0;
-
-    if (read(lines, &linesCount))
+    if (argc > 2)
     {
-        for (int i = 0; i < linesCount; ++i)
-        {
-            connectWords(lines[i]);
-        }
+        int result = connectWords(argv[1], argv[2]);
 
-        if (!write(lines, linesCount))
+        if (result == 1)
+        {
+            printf("Input file not found!\n");
+        }
+        else if (result == 2)
         {
             printf("Cannot create output file!\n");
         }
     }
     else
     {
-        printf("Input file not found!\n");
+        printf("Usage: 3-3.exe [input file] [output file]\n");
     }
 
     return 0;
