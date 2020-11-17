@@ -1,6 +1,7 @@
 // Vilius Puskunalis 5 grupe 3 uzduotis
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define ARGS_LENGTH 2
 
@@ -14,22 +15,30 @@
 
 char* connectLine(char* line)
 {
-    for (int i = 0; line[i + 3] != 0; ++i)
+    char *lineCopy = (char*) malloc(sizeof(char) * (MAX_LINE_SIZE + 1));
+    if (lineCopy == NULL)
+    {
+        return NULL;
+    }
+
+    strcpy(lineCopy, line);
+
+    for (int i = 0; lineCopy[i + 3] != 0; ++i)
     {
         // Checking whether symbols separated by a dash are not spaces
-        if (line[i] != ASCII_SPACE && line[i + 1] == '-' && line[i + 2] != ASCII_SPACE)
+        if (lineCopy[i] != ASCII_SPACE && lineCopy[i + 1] == '-' && lineCopy[i + 2] != ASCII_SPACE)
         {
             // Move the rest of the string, this way deleting the dash
-            for (int j = i + 1; line[j] != 0; ++j)
+            for (int j = i + 1; lineCopy[j] != 0; ++j)
             {
-                line[j] = line[j + 1];
+                lineCopy[j] = lineCopy[j + 1];
             }
 
             --i;
         }
     }
 
-    return line;
+    return lineCopy;
 }
 
 int fConnectLines(char* inputFileName, char* outputFileName)
@@ -47,7 +56,7 @@ int fConnectLines(char* inputFileName, char* outputFileName)
         return WRITE_ERROR;
     }
 
-    char *line = (char*) malloc(MAX_LINE_SIZE + 1);
+    char *line = (char*) malloc(sizeof(char) * (MAX_LINE_SIZE + 1));
     if (line == NULL)
     {
         fclose(inputFile);
@@ -57,7 +66,17 @@ int fConnectLines(char* inputFileName, char* outputFileName)
 
     while (fgets(line, MAX_LINE_SIZE + 1, inputFile))
     {
-        fputs(connectLine(line), outputFile);
+        char *parsedLine = connectLine(line);
+        if (parsedLine == NULL)
+        {
+            free(line);
+            fclose(inputFile);
+            fclose(outputFile);
+            return MEMORY_ERROR;
+        }
+
+        fputs(parsedLine, outputFile);
+        free(parsedLine);
     }
 
     free(line);
