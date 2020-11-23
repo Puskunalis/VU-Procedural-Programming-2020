@@ -1,12 +1,11 @@
 // Vilius Puskunalis 5 grupe 3 uzduotis
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define ARGS_LENGTH 2
 
 #define ASCII_SPACE 32
-#define MAX_LINE_SIZE 256
+#define MAX_LINE_LENGTH 256
 
 #define SUCCESS 0
 #define READ_ERROR 1
@@ -15,28 +14,27 @@
 
 char* connectLine(char* line)
 {
-    char *lineCopy = (char*) malloc(sizeof(char) * (MAX_LINE_SIZE + 1));
+    int copyLength = 0;
+    char *lineCopy = (char*) malloc(sizeof(char) * (MAX_LINE_LENGTH + 1));
     if (lineCopy == NULL)
     {
         return NULL;
     }
 
-    strcpy(lineCopy, line);
+    // First symbol will never need to be removed
+    lineCopy[0] = line[0];
 
-    for (int i = 0; lineCopy[i + 3] != 0; ++i)
+    for (int i = 0; line[i + 1] != 0; ++i)
     {
-        // Checking whether symbols separated by a dash are not spaces
-        if (lineCopy[i] != ASCII_SPACE && lineCopy[i + 1] == '-' && lineCopy[i + 2] != ASCII_SPACE)
+        // Do not copy dashes that are between other symbols in a word
+        if (line[i] == ASCII_SPACE || line[i + 1] != '-' || line[i + 2] == ASCII_SPACE || line[i + 3] == 0)
         {
-            // Move the rest of the string, this way deleting the dash
-            for (int j = i + 1; lineCopy[j] != 0; ++j)
-            {
-                lineCopy[j] = lineCopy[j + 1];
-            }
-
-            --i;
+            lineCopy[++copyLength] = line[i + 1];
         }
     }
+
+    // Add null symbol
+    lineCopy[++copyLength] = 0;
 
     return lineCopy;
 }
@@ -56,7 +54,7 @@ int fConnectLines(char* inputFileName, char* outputFileName)
         return WRITE_ERROR;
     }
 
-    char *line = (char*) malloc(sizeof(char) * (MAX_LINE_SIZE + 1));
+    char *line = (char*) malloc(sizeof(char) * (MAX_LINE_LENGTH + 1));
     if (line == NULL)
     {
         fclose(inputFile);
@@ -64,7 +62,7 @@ int fConnectLines(char* inputFileName, char* outputFileName)
         return MEMORY_ERROR;
     }
 
-    while (fgets(line, MAX_LINE_SIZE + 1, inputFile))
+    while (fgets(line, MAX_LINE_LENGTH + 1, inputFile))
     {
         char *parsedLine = connectLine(line);
         if (parsedLine == NULL)
