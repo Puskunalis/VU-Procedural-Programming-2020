@@ -26,8 +26,12 @@ char* connectLine(char* line)
 
     for (int i = 0; line[i + 1] != 0; ++i)
     {
-        // Do not copy dashes that are between other symbols in a word
-        if (line[i] == ASCII_SPACE || line[i + 1] != '-' || line[i + 2] == ASCII_SPACE || line[i + 3] == 0)
+        // Do not copy dashes that are between other symbols in a word, unless end of line
+        if (line[i] == ASCII_SPACE
+         || line[i + 1] != '-'
+         || line[i + 2] == ASCII_SPACE
+         || line[i + 2] == 0 // Extra case for a line that does not end with a newline symbol
+         || line[i + 3] == 0)
         {
             lineCopy[++copyLength] = line[i + 1];
         }
