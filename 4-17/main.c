@@ -36,8 +36,9 @@ void removeConsecutiveElements(struct node* head)
 int main()
 {
     int data;
-    struct node *tail = NULL, *head;
+    struct node *tail = NULL, *head = NULL;
 
+    printf("Enter a series of numbers separated by spaces, ending it with 0:\n");
     scanf("%d", &data);
 
     while (data != 0)
@@ -57,6 +58,7 @@ int main()
 
     removeConsecutiveElements(head);
 
+    printf("\nThe series with consecutive elements removed:\n");
     printElements(head);
 
     return 0;
