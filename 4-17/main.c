@@ -3,19 +3,6 @@
 #include <stdlib.h>
 #include "doublyLinkedList.c"
 
-void printElements(struct node* head)
-{
-    struct node *currentNode = head;
-
-    while (currentNode != NULL)
-    {
-        printf("%d ", currentNode->data);
-        currentNode = currentNode->next;
-    }
-
-    printf("\n");
-}
-
 void removeConsecutiveElements(struct node* head)
 {
     struct node *currentNode = head;

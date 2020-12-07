@@ -52,3 +52,16 @@ void removeNode(struct node* node)
 
     free(node);
 }
+
+void printElements(struct node* head)
+{
+    struct node *currentNode = head;
+
+    while (currentNode != NULL)
+    {
+        printf("%d ", currentNode->data);
+        currentNode = currentNode->next;
+    }
+
+    printf("\n");
+}

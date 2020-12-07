@@ -14,4 +14,6 @@ struct node* insertAfter(struct node* currentNode, int data);
 
 void removeNode(struct node* node);
 
+void printElements(struct node* head);
+
 #endif
