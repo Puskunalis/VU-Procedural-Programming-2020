@@ -1,11 +1,11 @@
 // Vilius Puskunalis 5 grupe 17 uzduotis
 #include <stdio.h>
 #include <stdlib.h>
-#include "doublyLinkedList.c"
+#include "doublyLinkedList.h"
 
-void removeConsecutiveElements(struct node* head)
+void removeConsecutiveElements(doublyLinkedList* list)
 {
-    struct node *currentNode = head;
+    node *currentNode = list->head;
 
     while (currentNode != NULL && currentNode->next != NULL)
     {
@@ -18,35 +18,43 @@ void removeConsecutiveElements(struct node* head)
             currentNode = currentNode->next;
         }
     }
+
+    list->tail = currentNode;
 }
 
 int main()
 {
-    int data;
-    struct node *tail = NULL, *head = NULL;
+    int data, position;
+    doublyLinkedList *list = createList();
 
-    printf("Enter a series of numbers separated by spaces, ending it with 0:\n");
-    scanf("%d", &data);
+    printf("Enter a series of numbers in format \"[number] [insertion position 0/1]\" separated by spaces, ending it with \"0 0\":\n");
+    scanf("%d %d", &data, &position);
 
     while (data != 0)
     {
-        if (tail != NULL)
+        if (position == 1)
         {
-            tail = insertAfter(tail, data);
+            push(list, data);
         }
-        else
+        else if (position == 0)
         {
-            tail = createNode(data);
-            head = tail;
+            unshift(list, data);
         }
 
-        scanf("%d", &data);
+        scanf("%d %d", &data, &position);
     }
 
-    removeConsecutiveElements(head);
+    printElementsForward(list);
 
-    printf("\nThe series with consecutive elements removed:\n");
-    printElements(head);
+    removeConsecutiveElements(list);
+
+    printf("\nThe series with consecutive elements removed, forward:\n");
+    printElementsForward(list);
+
+    printf("\nThe series with consecutive elements removed, backward:\n");
+    printElementsBackward(list);
+
+    destroyList(list);
 
     return 0;
 }

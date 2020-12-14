@@ -2,18 +2,27 @@
 #ifndef DOUBLY_LINKED_LIST_H
 #define DOUBLY_LINKED_LIST_H
 
-struct node
+typedef struct node
 {
     int data;
     struct node *prev, *next;
-};
+} node;
 
-struct node* createNode(int data);
+typedef struct doublyLinkedList
+{
+    struct node *head, *tail;
+} doublyLinkedList;
 
-struct node* insertAfter(struct node* currentNode, int data);
+node* createNode(int data);
+void removeNode(node* node);
 
-void removeNode(struct node* node);
+doublyLinkedList* createList();
+void destroyList(doublyLinkedList* list);
 
-void printElements(struct node* head);
+void push(doublyLinkedList* list, int data);
+void unshift(doublyLinkedList* list, int data);
+
+void printElementsForward(doublyLinkedList* list);
+void printElementsBackward(doublyLinkedList* list);
 
 #endif

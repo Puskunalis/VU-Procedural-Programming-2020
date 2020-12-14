@@ -3,31 +3,15 @@
 #include <stdlib.h>
 #include "doublyLinkedList.h"
 
-struct node* createNode(int data)
+node* createNode(int data)
 {
-    struct node* head = (struct node*) malloc(sizeof(struct node));
+    node *head = (node*) malloc(sizeof(node));
 
     head->data = data;
     head->prev = NULL;
     head->next = NULL;
 
     return head;
-}
-
-struct node* insertAfter(struct node* currentNode, int data)
-{
-    struct node* newNode = createNode(data);
-
-    if (currentNode->next != NULL)
-    {
-        newNode->next = currentNode->next;
-        newNode->next->prev = newNode;
-    }
-
-    currentNode->next = newNode;
-    newNode->prev = currentNode;
-
-    return newNode;
 }
 
 void removeNode(struct node* node)
@@ -53,14 +37,85 @@ void removeNode(struct node* node)
     free(node);
 }
 
-void printElements(struct node* head)
+doublyLinkedList* createList()
 {
-    struct node *currentNode = head;
+    doublyLinkedList *list = (doublyLinkedList*) malloc(sizeof(doublyLinkedList));
+
+    list->head = NULL;
+    list->tail = NULL;
+
+    return list;
+}
+
+void destroyList(doublyLinkedList* list)
+{
+    node *currentNode = list->head, *nextNode;
+
+    while (currentNode != NULL)
+    {
+        nextNode = currentNode->next;
+        free(currentNode);
+        currentNode = nextNode;
+    }
+
+    free(list);
+}
+
+void push(doublyLinkedList* list, int data)
+{
+    node *newNode = createNode(data);
+
+    if (list->tail != NULL)
+    {
+        newNode->prev = list->tail;
+        newNode->prev->next = newNode;
+    }
+    else
+    {
+        list->head = newNode;
+    }
+
+    list->tail = newNode;
+}
+
+void unshift(doublyLinkedList* list, int data)
+{
+    node *newNode = createNode(data);
+
+    if (list->head != NULL)
+    {
+        newNode->next = list->head;
+        newNode->next->prev = newNode;
+    }
+    else
+    {
+        list->tail = newNode;
+    }
+
+    list->head = newNode;
+}
+
+void printElementsForward(doublyLinkedList* list)
+{
+    node *currentNode = list->head;
 
     while (currentNode != NULL)
     {
         printf("%d ", currentNode->data);
         currentNode = currentNode->next;
+    }
+
+    printf("\n");
+}
+
+void printElementsBackward(doublyLinkedList* list)
+{
+    node *currentNode = list->tail;
+
+    while (currentNode != NULL)
+    {
+        printf("%d ", currentNode->data);
+        currentNode = currentNode->prev;
     }
 
     printf("\n");
