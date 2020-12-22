@@ -44,6 +44,7 @@ int main()
         scanf("%d %d", &data, &position);
     }
 
+    printf("\nEntered series:\n");
     printElementsForward(list);
 
     removeConsecutiveElements(list);
@@ -54,7 +55,8 @@ int main()
     printf("\nThe series with consecutive elements removed, backward:\n");
     printElementsBackward(list);
 
-    destroyList(list);
+    clearList(list);
+    free(list);
 
     return 0;
 }

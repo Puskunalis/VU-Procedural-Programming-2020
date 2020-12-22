@@ -13,11 +13,10 @@ typedef struct doublyLinkedList
     struct node *head, *tail;
 } doublyLinkedList;
 
-node* createNode(int data);
 void removeNode(node* node);
 
 doublyLinkedList* createList();
-void destroyList(doublyLinkedList* list);
+void clearList(doublyLinkedList* list);
 
 void push(doublyLinkedList* list, int data);
 void unshift(doublyLinkedList* list, int data);

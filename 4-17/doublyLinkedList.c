@@ -5,13 +5,13 @@
 
 node* createNode(int data)
 {
-    node *head = (node*) malloc(sizeof(node));
+    node *newNode = (node*) malloc(sizeof(node));
 
-    head->data = data;
-    head->prev = NULL;
-    head->next = NULL;
+    newNode->data = data;
+    newNode->prev = NULL;
+    newNode->next = NULL;
 
-    return head;
+    return newNode;
 }
 
 void removeNode(struct node* node)
@@ -31,7 +31,7 @@ void removeNode(struct node* node)
     }
     else
     {
-        node->prev->next == NULL;
+        node->prev->next = NULL;
     }
 
     free(node);
@@ -47,76 +47,93 @@ doublyLinkedList* createList()
     return list;
 }
 
-void destroyList(doublyLinkedList* list)
+void clearList(doublyLinkedList* list)
 {
-    node *currentNode = list->head, *nextNode;
-
-    while (currentNode != NULL)
+    if (list->head != NULL)
     {
-        nextNode = currentNode->next;
+        node *currentNode = list->head->next;
+
+        while (currentNode != NULL)
+        {
+            free(currentNode->prev);
+            currentNode = currentNode->next;
+        }
+
         free(currentNode);
-        currentNode = nextNode;
     }
 
-    free(list);
+    list->head = NULL;
+    list->tail = NULL;
 }
 
 void push(doublyLinkedList* list, int data)
 {
-    node *newNode = createNode(data);
-
-    if (list->tail != NULL)
+    if (list != NULL)
     {
-        newNode->prev = list->tail;
-        newNode->prev->next = newNode;
-    }
-    else
-    {
-        list->head = newNode;
-    }
+        node *newNode = createNode(data);
 
-    list->tail = newNode;
+        if (list->tail != NULL)
+        {
+            newNode->prev = list->tail;
+            newNode->prev->next = newNode;
+        }
+        else
+        {
+            list->head = newNode;
+        }
+
+        list->tail = newNode;
+    }
 }
 
 void unshift(doublyLinkedList* list, int data)
 {
-    node *newNode = createNode(data);
-
-    if (list->head != NULL)
+    if (list != NULL)
     {
-        newNode->next = list->head;
-        newNode->next->prev = newNode;
-    }
-    else
-    {
-        list->tail = newNode;
-    }
+        node *newNode = createNode(data);
 
-    list->head = newNode;
+        if (list->head != NULL)
+        {
+            newNode->next = list->head;
+            newNode->next->prev = newNode;
+        }
+        else
+        {
+            list->tail = newNode;
+        }
+
+        list->head = newNode;
+    }
 }
 
 void printElementsForward(doublyLinkedList* list)
 {
-    node *currentNode = list->head;
-
-    while (currentNode != NULL)
+    if (list != NULL && list->head != NULL)
     {
-        printf("%d ", currentNode->data);
-        currentNode = currentNode->next;
-    }
+        node *currentNode = list->head;
 
-    printf("\n");
+        while (currentNode != NULL)
+        {
+            printf("%d ", currentNode->data);
+            currentNode = currentNode->next;
+        }
+
+        printf("\n");
+    }
 }
 
 void printElementsBackward(doublyLinkedList* list)
 {
-    node *currentNode = list->tail;
-
-    while (currentNode != NULL)
+    if (list != NULL && list->tail != NULL)
     {
-        printf("%d ", currentNode->data);
-        currentNode = currentNode->prev;
-    }
+        node *currentNode = list->tail;
 
-    printf("\n");
+        while (currentNode != NULL)
+        {
+            printf("%d ", currentNode->data);
+            currentNode = currentNode->prev;
+        }
+
+        printf("\n");
+    }
 }
