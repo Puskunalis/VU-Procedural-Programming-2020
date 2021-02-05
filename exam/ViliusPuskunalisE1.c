@@ -8,19 +8,19 @@ unsigned char hexToChar (int digit, char type)
     unsigned char dRaides[6] = {'A', 'B', 'C', 'D', 'E', 'F'};
 
     if (digit >= 0 && digit <= 9)
-	{
+    {
         return skaiciai[digit];
     }
 	else if (digit >= 0 && digit <= 15 && type <= 0)
-	{
+    {
         return mRaides[digit - 10];
     }
 	else if (digit >= 0 && digit <= 15 && type >= 1)
-	{
+    {
         return dRaides[digit - 10];
     }
 	else
-	{
+    {
         return 0;
     }
 }
